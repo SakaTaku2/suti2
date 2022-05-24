@@ -1,7 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<ctype.h>
-#include<time.h>
 
 char com1[256], com2[256], one[256];
 int A = 0, B = 0;
@@ -11,9 +10,10 @@ void comper1(FILE *fp){
 	char cha;
 
 	if (fp == NULL) {
-    printf ("comp.txt file not found.\n");
+    printf ("comp.txt file is nothing.\n");
     exit(0);
   }
+
 	while((cha = fgetc(fp)) != EOF){
 		if((cha >= 'A') && (cha <= 'Z')){
       cha += 0x20;
@@ -90,37 +90,43 @@ void comper2(){
 		for(m = 0;m < i; m++){
 			switch(c){
 				case 0:
-					printf("%c", com1[m]);
+					printf("|%c", com1[m]);
 					break;
 				case 1:
-					printf("%c", com2[m]);
+					printf("|%c", com2[m]);
 					break;
 				default:
 					c = 0;
 					break;
 			}
 		}
-		printf("\n");
+		printf("|\n");
 	}
 	for(m = 0;m < i; m++){
 		switch(one[m]){
 			case 0:
-				printf("x");
+				printf("|x");
 				break;
 			case 1:
-				printf("o");
+				printf("|o");
 				break;
 			default:
-				printf("ellor");
+				printf("error");
 				break;
 		}
 	}
-	printf("\n");
+	printf("|\n");
 }
 
 int main(){
 	FILE *fp1;
 	int i;
+  char name[256];
+
+  printf("ファイル名を指定してください\n");
+  printf("ファイル名：");
+  scanf(" %s", &name);
+  printf("\nマッチング結果\n");
 	for(i = 0; i < 256; i++)
 		com1[i] = 0x0a;
 	for(i = 0; i < 256; i++)
@@ -128,8 +134,8 @@ int main(){
 	for(i = 0; i < 256; i++)
 		one[i] = 0x0a;
 
-	fp1 = fopen("comp.txt", "r");
+	fp1 = fopen(name, "r");
 	comper1(fp1);
 	comper2();
-	return 0;
+	return 0;  
 }
